@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 9 d?c. 2013 00:26:47 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="MDOC.Domain.Contact" table="CONTACT" discriminator-value="C">
+		<id name="id" type="int">
+			<column name="contactId" />
+			<generator class="native" />
+		</id>
+		<discriminator column="CARACTERISTIQUE" type="java.lang.String" />
+	
+		<version name="version" access="field" column="VERSION"/>
+		<many-to-one name="add" column="addressId" unique="true"
+			not-null="true" />
+
+		<set name="books" table="REPERTOIRE" cascade="all">
+			<key column="contactId" />
+			<many-to-many class="MDOC.Domain.ContactGroup" column="groupId" />
+		</set>
+
+		<set name="Numbers" inverse=" true">
+			<key column="phoneId" />
+			<one-to-many class="MDOC.Domain.PhoneNumber" />
+		</set>
+
+		<property name="firstName" type="java.lang.String">
+			<column name="FIRSTNAME" />
+		</property>
+		<property name="lastName" type="java.lang.String">
+			<column name="LASTNAME" />
+		</property>
+		<property name="email" type="java.lang.String">
+			<column name="EMAIL" />
+		</property>
+
+		<subclass name="MDOC.Domain.Entreprise" extends="MDOC.Domain.Contact" discriminator-value="E">
+			<property name="numSiret" type="int">
+				<column name="NUM_SIRET" />
+			</property>
+		</subclass>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 10 d?c. 2013 19:32:46 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="MDOC.Domain.ContactGroup" table="CONTACTGROUP" >
+        <id name="groupId" type="int">
+            <column name="groupID" />
+            <generator class="native" />
+        </id>
+		<version name="version" access="field" column="VERSION"/>
+       <set name="books" table="REPERTOIRE" cascade="all" inverse="true">
+			<key column="groupId" />
+			<many-to-many class="MDOC.Domain.Contact" column="contactId"  />
+		</set>
+        <property name="groupName" type="java.lang.String">
+            <column name="GROUPNAME" />
+        </property>
+    </class>
+</hibernate-mapping>
